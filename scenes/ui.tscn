@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn1vdyt00eyk8"]
+
+[ext_resource type="Script" uid="uid://6ltvkpoycl4j" path="res://scenes/ui.gd" id="1_gdt2y"]
+[ext_resource type="FontFile" uid="uid://cfgjeqw5hgs2" path="res://kenney_space-shooter-redux/Bonus/kenvector_future.ttf" id="1_yev5y"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_gdt2y")
+
+[node name="Score" type="MarginContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -106.0
+offset_right = 106.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 11
+
+[node name="ScoreLabel" type="Label" parent="Score"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_yev5y")
+theme_override_font_sizes/font_size = 38
+text = "Score: 0"
+horizontal_alignment = 1
+
+[node name="Health" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -33.0
+offset_right = 212.0
+grow_vertical = 0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_bottom = 7
+
+[node name="Lives" type="HBoxContainer" parent="Health"]
+layout_mode = 2
+theme_override_constants/separation = 8
