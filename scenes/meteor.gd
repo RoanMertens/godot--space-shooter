@@ -36,3 +36,11 @@ func generate_start_position() -> Vector2:
 
 func _on_body_entered(body: Node2D) -> void:
 	collision_with.emit(body)
+
+func explode() -> void:
+	$MeteorDestroyedSound.play()
+	$MeteorImage.hide()
+	$CollisionPolygon2D.call_deferred("set_disabled", true)
+
+func _on_meteor_destroyed_sound_finished() -> void:
+	queue_free()

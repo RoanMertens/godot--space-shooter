@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyqqgordmh7pa"]
+[gd_scene load_steps=4 format=3 uid="uid://cyqqgordmh7pa"]
 
 [ext_resource type="Script" uid="uid://bg5byi1nmovea" path="res://scenes/meteor.gd" id="1_pxso2"]
+[ext_resource type="AudioStream" uid="uid://dtr83jvd8b1wg" path="res://kenney_space-shooter-redux/sounds/explosion_old.mp3" id="3_8tfog"]
 [ext_resource type="Script" uid="uid://d1g355fcne4ed" path="res://scenes/meteor_image.gd" id="3_83eji"]
 
 [node name="Meteor" type="Area2D"]
@@ -14,4 +15,8 @@ script = ExtResource("3_83eji")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-33, -39, 22, -39, 48, -2, 34, 32, 10, 28, -21, 40, -49, 9)
 
+[node name="MeteorDestroyedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_8tfog")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="MeteorDestroyedSound" to="." method="_on_meteor_destroyed_sound_finished"]

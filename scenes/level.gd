@@ -3,7 +3,7 @@ extends Node2D
 signal score_updated()
 
 func _on_laser_hit(area: Area2D) -> void:
-	$Meteors.destroy_meteor(area)
+	area.explode()
 	increase_score()
 
 func _on_meteors_on_player_hit() -> void:
