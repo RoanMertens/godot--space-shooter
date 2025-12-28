@@ -2,8 +2,8 @@
 extends Area2D
 const DIRECTION_Y: float = 1.0
 const START_POSITION_Y: int = -50
-const MIN_MOVEMENT_SPEED: int = 200
-const MAX_MOVEMENT_SPEED: int = 500
+const MIN_MOVEMENT_SPEED: int = 100
+const MAX_MOVEMENT_SPEED: int = 400
 const MAX_ROTATION_SPEED: int = 10
 
 var added_movement_start_speed: int

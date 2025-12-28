@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://wps0hpecyxnr"]
+[gd_scene load_steps=5 format=3 uid="uid://wps0hpecyxnr"]
 
 [ext_resource type="Texture2D" uid="uid://dvlf2tuq36icc" path="res://kenney_space-shooter-redux/PNG/playerShip2_orange.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://okioub41sr24" path="res://scenes/player.gd" id="1_g2els"]
+[ext_resource type="Script" uid="uid://d3an273pyowq" path="res://scenes/timer.gd" id="3_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://dqc73kpykyjlr" path="res://kenney_space-shooter-redux/Bonus/sfx_shieldDown.ogg" id="4_dqkch"]
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
@@ -16,3 +18,14 @@ texture = ExtResource("1_3vyb7")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-4, -37, 3, -37, 14, -15, 56, 5, 37, 35, 16, 28, 12, 37, -12, 37, -17, 29, -38, 35, -56, 5, -13, -15)
+
+[node name="FireWeaponTimer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+script = ExtResource("3_qhqgy")
+
+[node name="PlayerHurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_dqkch")
+volume_db = 17.165
+
+[connection signal="timeout" from="FireWeaponTimer" to="FireWeaponTimer" method="_on_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cbyp1xwa5d3e1"]
+[gd_scene load_steps=15 format=3 uid="uid://cbyp1xwa5d3e1"]
 
 [ext_resource type="Script" uid="uid://df2po7qljpmrc" path="res://scenes/level.gd" id="1_mx8sn"]
 [ext_resource type="Texture2D" uid="uid://ckdy8t77o6x3s" path="res://kenney_space-shooter-redux/Backgrounds/black.png" id="1_w7c3h"]
@@ -6,12 +6,11 @@
 [ext_resource type="Script" uid="uid://p1rilgvnqlaq" path="res://scenes/lasers.gd" id="4_2r41h"]
 [ext_resource type="Script" uid="uid://c1rx1i1sgkntf" path="res://scenes/increase_meteor_timer.gd" id="4_mx8sn"]
 [ext_resource type="Script" uid="uid://crli08vl2vbkr" path="res://scenes/generate_meteor_timer.gd" id="4_ppgk2"]
-[ext_resource type="Script" uid="uid://bnufe6rjj1m7k" path="res://scenes/laser_cooldown_timer.gd" id="6_2r41h"]
 [ext_resource type="Texture2D" uid="uid://cffwwgow66dsi" path="res://kenney_space-shooter-redux/PNG/Effects/star1.png" id="7_8c41q"]
 [ext_resource type="Texture2D" uid="uid://bgpadibv2vbcl" path="res://kenney_space-shooter-redux/PNG/Effects/star2.png" id="8_olg7q"]
+[ext_resource type="Script" uid="uid://7n36drm7b7ob" path="res://scenes/meteors.gd" id="8_t1rx8"]
 [ext_resource type="Texture2D" uid="uid://qwte26gofqhu" path="res://kenney_space-shooter-redux/PNG/Effects/star3.png" id="9_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://dn1vdyt00eyk8" path="res://scenes/ui.tscn" id="10_olg7q"]
-[ext_resource type="AudioStream" uid="uid://dqc73kpykyjlr" path="res://kenney_space-shooter-redux/Bonus/sfx_shieldDown.ogg" id="12_8iemx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8iemx"]
 animations = [{
@@ -36,7 +35,7 @@ size = Vector2(119, 734)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mx8sn"]
 size = Vector2(1513, 100)
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" groups=["level"]]
 script = ExtResource("1_mx8sn")
 
 [node name="BackgroundImage" type="Sprite2D" parent="."]
@@ -61,7 +60,7 @@ sprite_frames = SubResource("SpriteFrames_8iemx")
 autoplay = "default"
 frame_progress = 0.95812494
 
-[node name="Player" parent="." instance=ExtResource("2_w8frs")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_w8frs")]
 position = Vector2(625, 353)
 
 [node name="Lasers" type="Node2D" parent="."]
@@ -93,35 +92,25 @@ shape = SubResource("RectangleShape2D_mx8sn")
 metadata/_edit_lock_ = true
 
 [node name="Meteors" type="Node2D" parent="."]
+script = ExtResource("8_t1rx8")
 
-[node name="Timers" type="Node2D" parent="."]
+[node name="Timers" type="Node2D" parent="Meteors"]
 
-[node name="GenerateMeteorTimer" type="Timer" parent="Timers"]
+[node name="GenerateMeteorTimer" type="Timer" parent="Meteors/Timers"]
 wait_time = 0.25
 autostart = true
 script = ExtResource("4_ppgk2")
 
-[node name="IncreaseMeteorTimer" type="Timer" parent="Timers"]
+[node name="IncreaseMeteorTimer" type="Timer" parent="Meteors/Timers"]
 wait_time = 5.0
 autostart = true
 script = ExtResource("4_mx8sn")
 
-[node name="LaserCooldownTimer" type="Timer" parent="Timers"]
-wait_time = 0.3
-one_shot = true
-script = ExtResource("6_2r41h")
-
 [node name="UI" parent="." instance=ExtResource("10_olg7q")]
 
-[node name="PlayerHurtSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("12_8iemx")
-volume_db = 17.165
-
-[connection signal="life_updated" from="." to="UI" method="_on_level_life_updated"]
 [connection signal="score_updated" from="." to="UI" method="_on_level_score_updated"]
 [connection signal="shoot" from="Player" to="Lasers" method="_on_player_shoot"]
-[connection signal="on_player_hit" from="Timers/GenerateMeteorTimer" to="." method="_on_player_hit"]
-[connection signal="timeout" from="Timers/GenerateMeteorTimer" to="Timers/GenerateMeteorTimer" method="_on_timeout"]
-[connection signal="timeout" from="Timers/IncreaseMeteorTimer" to="Timers/IncreaseMeteorTimer" method="_on_timeout"]
-[connection signal="cooled_down" from="Timers/LaserCooldownTimer" to="Lasers" method="_on_laser_cooldown_timer_cooled_down"]
-[connection signal="timeout" from="Timers/LaserCooldownTimer" to="Timers/LaserCooldownTimer" method="_on_timeout"]
+[connection signal="takes_damage" from="Player" to="UI" method="_on_player_takes_damage"]
+[connection signal="on_player_hit" from="Meteors" to="." method="_on_meteors_on_player_hit"]
+[connection signal="timeout" from="Meteors/Timers/GenerateMeteorTimer" to="Meteors/Timers/GenerateMeteorTimer" method="_on_timeout"]
+[connection signal="timeout" from="Meteors/Timers/IncreaseMeteorTimer" to="Meteors/Timers/IncreaseMeteorTimer" method="_on_timeout"]
