@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cbyp1xwa5d3e1"]
+[gd_scene load_steps=16 format=3 uid="uid://cbyp1xwa5d3e1"]
 
 [ext_resource type="Script" uid="uid://df2po7qljpmrc" path="res://scenes/level.gd" id="1_mx8sn"]
 [ext_resource type="Texture2D" uid="uid://ckdy8t77o6x3s" path="res://kenney_space-shooter-redux/Backgrounds/black.png" id="1_w7c3h"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://7n36drm7b7ob" path="res://scenes/meteors.gd" id="8_t1rx8"]
 [ext_resource type="Texture2D" uid="uid://qwte26gofqhu" path="res://kenney_space-shooter-redux/PNG/Effects/star3.png" id="9_t1rx8"]
 [ext_resource type="PackedScene" uid="uid://dn1vdyt00eyk8" path="res://scenes/ui.tscn" id="10_olg7q"]
+[ext_resource type="AudioStream" uid="uid://dtr83jvd8b1wg" path="res://kenney_space-shooter-redux/sounds/explosion_old.mp3" id="11_8iemx"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8iemx"]
 animations = [{
@@ -105,6 +106,11 @@ script = ExtResource("4_ppgk2")
 wait_time = 5.0
 autostart = true
 script = ExtResource("4_mx8sn")
+
+[node name="Audio" type="Node2D" parent="Meteors"]
+
+[node name="MeteorDestroyedSound" type="AudioStreamPlayer2D" parent="Meteors/Audio"]
+stream = ExtResource("11_8iemx")
 
 [node name="UI" parent="." instance=ExtResource("10_olg7q")]
 

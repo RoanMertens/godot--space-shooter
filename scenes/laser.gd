@@ -4,7 +4,7 @@ extends Area2D
 var shot_from: Variant
 var direction: Variant
 @export var bullet_speed: int = 2000
-signal hit
+signal hit(area: Area2D)
 
 func _ready() -> void:
 	position = shot_from
@@ -16,5 +16,4 @@ func _process(delta: float) -> void:
 	position += direction * bullet_speed * delta
 
 func _on_area_entered(area: Area2D) -> void:
-	area.queue_free()
-	hit.emit()
+	hit.emit(area)
